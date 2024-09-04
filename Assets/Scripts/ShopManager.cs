@@ -19,6 +19,12 @@ public class ShopManager : MonoBehaviour
     {
         for (int index = 0; index < 3; index++)
         {
+            Item slotItem = FindObjectOfType<ItemWarehouse>().GetItem(wave);
+            while (slots.Contains(slotItem)) 
+            {
+                slotItem = FindObjectOfType<ItemWarehouse>().GetItem(wave);
+            }
+
             slots.Add(FindObjectOfType<ItemWarehouse>().GetItem(wave));
             GameObject.Find("ItemTitle" + (index + 1).ToString()).GetComponent<TMP_Text>().SetText(slots[index]._name);
             GameObject.Find("ItemDesc" + (index + 1).ToString()).GetComponent<TMP_Text>().SetText(slots[index]._description);

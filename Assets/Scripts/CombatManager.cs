@@ -21,7 +21,6 @@ public class CombatManager : MonoBehaviour
     {
         CombatActive = false;
         globalManager = FindObjectOfType<GlobalManager>();
-        playerStats = globalManager.playerStats;
         playerCharInfo = FindObjectOfType<PlayerCharInfo>();
         enemyCount = 0;
         newEnemyPos = new Vector3[5];
@@ -78,17 +77,17 @@ public class CombatManager : MonoBehaviour
                     if (enemy.attackProgress > 300)
                     {
                         enemy.attackProgress = 0;
-                        EnemyAttack(enemy, playerStats);
+                        EnemyAttack(enemy, globalManager.playerStats);
                     }
                 }
             }
 
-            playerStats.attackProgress += playerStats.attackSpeed * Time.deltaTime * globalManager.gameSpeed;
+            globalManager.playerStats.attackProgress += globalManager.playerStats.attackSpeed * Time.deltaTime * globalManager.gameSpeed;
 
-            if (playerStats.attackProgress > 300)
+            if (globalManager.playerStats.attackProgress > 300)
             {
-                playerStats.attackProgress = 0;
-                PlayerAttack(playerStats, enemyCombatants[0]);
+                globalManager.playerStats.attackProgress = 0;
+                PlayerAttack(globalManager.playerStats, enemyCombatants[0]);
             }
         }
     }
@@ -147,7 +146,6 @@ public class CombatManager : MonoBehaviour
     {
         Debug.Log($"Attack initiated on player");
         playerCharInfo.DealDamage((assailant.damage - victim.defense) * UnityEngine.Random.Range(100 - assailant.attackVolatility, 100 + assailant.attackVolatility) / 100);
-        victim = globalManager.playerStats;
         Debug.Log($"{victim.HP} HP remaining");
 
         if (victim.HP < 0)

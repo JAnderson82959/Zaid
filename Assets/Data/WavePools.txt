@@ -1,0 +1,7 @@
+Difficulty 0
+Enemy,Enemy
+Enemy,Dark
+Dark
+:Difficulty 1
+Dark,Dark
+Dark,Enemy

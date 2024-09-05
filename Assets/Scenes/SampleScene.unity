@@ -850,6 +850,7 @@ MonoBehaviour:
   pfShopCanvas: {fileID: 6686558576884539452, guid: 0268882d618789d4fa82044c6074cd2c, type: 3}
   currentWave: 0
   dimOverlay: {fileID: 0}
+  gameSpeed: 0
 --- !u!4 &2011569565
 Transform:
   m_ObjectHideFlags: 0

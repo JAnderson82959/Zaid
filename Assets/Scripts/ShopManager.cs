@@ -25,7 +25,7 @@ public class ShopManager : MonoBehaviour
                 slotItem = FindObjectOfType<ItemWarehouse>().GetItem(wave);
             }
 
-            slots.Add(FindObjectOfType<ItemWarehouse>().GetItem(wave));
+            slots.Add(slotItem);
             GameObject.Find("ItemTitle" + (index + 1).ToString()).GetComponent<TMP_Text>().SetText(slots[index]._name);
             GameObject.Find("ItemDesc" + (index + 1).ToString()).GetComponent<TMP_Text>().SetText(slots[index]._description);
         }

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 20
   damage: 2
-  attackSpeed: 30
+  attackSpeed: 36
   attackVolatility: 7
   defense: 6
   attackProgress: 0

@@ -57,6 +57,10 @@ Shader "Custom/SpriteShader"
             clip(dissolveClip);
             float3 nullColor = (0.0f, 0.0f, 0.0f);
             fixed4 texCord = tex2D (_MainTex, IN.uv_MainTex);
+            bool clipCond = (texCord.r + texCord.g + texCord.b <= 1/255);
+
+            //shader clips pixels if they're perfect near-black in the texture          
+            clip(-1 * clipCond);
             
             // Albedo comes from a texture tinted by color
             fixed4 c = texCord * _Color;

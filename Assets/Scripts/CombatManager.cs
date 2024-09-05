@@ -109,8 +109,9 @@ public class CombatManager : MonoBehaviour
             victim.HP -= damageDealt;
         }
         
-        GameObject damageText = Instantiate(pfDamageText, victim.gameObject.transform);
+        GameObject damageText = Instantiate(pfDamageText, GameObject.Find("HitNumbers").transform);
         damageText.GetComponentInChildren<TMP_Text>().SetText(damageDealt.ToString());
+        damageText.transform.position = victim.transform.position;
         Animation animationComponent = victim.GetComponent<Animation>();
 
         if (animationComponent.IsPlaying("SpriteShake"))

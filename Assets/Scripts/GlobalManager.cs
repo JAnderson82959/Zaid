@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,6 +15,26 @@ public class PlayerStats
     public float attackProgress { get; set; }
 }
 
+public class Artifact
+{
+    public string _name;
+    public string _description;
+    public string _ability;
+    public string _sprite;
+    public bool _isPlayerAttackTriggered;
+    public bool _isPlayerDamageTriggered;
+
+    public Artifact(string name, string description, string ability, string sprite, bool isPlayerAttackTriggered, bool isPlayerDamageTriggered)
+    {
+        _name = name;
+        _description = description;
+        _ability = ability;
+        _sprite = sprite;
+        _isPlayerAttackTriggered = isPlayerAttackTriggered;
+        _isPlayerDamageTriggered = isPlayerDamageTriggered;
+    }
+}
+
 public class GlobalManager : MonoBehaviour
 {
     public PlayerStats playerStats;
@@ -22,6 +43,7 @@ public class GlobalManager : MonoBehaviour
     public int currentWave;
     public GameObject dimOverlay;
     GameObject shopCanvas;
+    public List<Artifact> playerArtifacts;
 
     public int gameSpeed;
 

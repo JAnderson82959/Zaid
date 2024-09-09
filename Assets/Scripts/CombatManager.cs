@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class CombatManager : MonoBehaviour
 {
-    public bool CombatActive;
+    public bool combatActive;
     public PlayerStats playerStats;
     public List<EnemyCharInfo> enemyCombatants;
     public GameObject pfDamageText;
@@ -16,10 +16,11 @@ public class CombatManager : MonoBehaviour
     public int enemyCount;
     public Vector3[] newEnemyPos;
     public GlobalManager globalManager;
+    public bool combatPaused;
 
     void Awake()
     {
-        CombatActive = false;
+        combatActive = false;
         globalManager = FindObjectOfType<GlobalManager>();
         playerCharInfo = FindObjectOfType<PlayerCharInfo>();
         enemyCount = 0;
@@ -48,7 +49,7 @@ public class CombatManager : MonoBehaviour
 
     public void StartCombat()
     {
-        CombatActive = true;
+        combatActive = true;
         enemyCombatants = FindObjectsOfType<EnemyCharInfo>().ToListPooled<EnemyCharInfo>();
         Debug.Log("Combat started");
     }
@@ -66,7 +67,7 @@ public class CombatManager : MonoBehaviour
 
     void Update()
     {
-        if (CombatActive)
+        if (combatActive)
         {
             foreach (EnemyCharInfo enemy in enemyCombatants)
             {
@@ -95,6 +96,10 @@ public class CombatManager : MonoBehaviour
     void PlayerAttack(PlayerStats assailant, EnemyCharInfo victim)
     {
         Debug.Log($"Attack initiated on {victim.name}");
+
+        //check if artifacts will be triggered
+
+
         bool crit = UnityEngine.Random.Range(0,100) < assailant.critChance;
         int damageDealt;
 
@@ -152,15 +157,15 @@ public class CombatManager : MonoBehaviour
         if (victim.HP < 0)
         {
             playerCharInfo.Die();
-            CombatActive = false;
+            combatActive = false;
         }
     }
 
     //Call when combat is won, initiate shop
     void CombatCompleted()
     {
-        CombatActive = false;
-        StartCoroutine(globalManager.BeginShop());
+        combatActive = false;
+        StartCoroutine( globalManager.BeginShop() );
     }
 }
 

@@ -13,6 +13,7 @@ public class PlayerStats
     public int attackVolatility { get; set; }
     public int critChance { get; set; }
     public float attackProgress { get; set; }
+    public int rerollCount { get; set; }
 }
 
 public class GlobalManager : MonoBehaviour
@@ -88,7 +89,7 @@ public class GlobalManager : MonoBehaviour
     public IEnumerator EndShopHelper()
     {
         Animation animation = dimOverlay.GetComponent<Animation>();
-        shopCanvas.SetActive(false);
+        Destroy(shopCanvas);
         animation.Play("LightenOverlay");
         yield return new WaitForSeconds(0.5f);
 
@@ -108,5 +109,13 @@ public class GlobalManager : MonoBehaviour
         }
 
         return;
+    }
+
+    //cutscene?
+    public void StartRun()
+    {
+        CombatManager combatManager = FindObjectOfType<CombatManager>();
+        combatManager.SpawnArtifacts(playerArtifacts);
+        StartCoroutine(combatManager.AdvanceWave());
     }
 }

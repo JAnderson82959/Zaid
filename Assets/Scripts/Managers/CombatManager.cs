@@ -91,10 +91,10 @@ public class CombatManager : MonoBehaviour
     {
         globalManager.currentWave++;
         GameObject.Find("WaveCounter").GetComponent<TMP_Text>().SetText("Wave " + globalManager.currentWave.ToString());
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.3f / globalManager.gameSpeed);
         
         SpawnEnemies(gameObject.GetComponent<EnemyWarehouse>().GetWave(globalManager.currentWave));
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(1.3f / globalManager.gameSpeed);
     }
 
     void Update()

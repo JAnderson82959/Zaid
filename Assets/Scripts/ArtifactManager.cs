@@ -27,27 +27,38 @@ public class Artifact
 public class ArtifactManager : MonoBehaviour
 {
     List<Artifact> artifactPool;
-    List<Artifact> playerArtifacts;
+    GlobalManager globalManager;
 
-    void Start()
+    void Awake()
     {
+        globalManager = FindObjectOfType<GlobalManager>();
         artifactPool = new List<Artifact>();
-        playerArtifacts = new List<Artifact>();
 
         artifactPool.Add(new Artifact(
             "Fists",
-            "Long-honed bludgeons of meat and bone. Your dearest friends.",
+            "Oft-tested bludgeons of meat and bone. Your dearest friends.",
             "Regular attack.",
             "artifact_w_fist",
             true, false, true
             ));
-
-        playerArtifacts.Add(artifactPool[0]);
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    public Artifact GetArtifact(string name)
+    {
+        foreach (Artifact artifact in artifactPool)
+        {
+            if (artifact._name == name)
+            {
+                return artifact;
+            }
+        }
+
+        return null;
     }
 }

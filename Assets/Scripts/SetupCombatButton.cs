@@ -23,6 +23,8 @@ public class SetupCombatButton : MonoBehaviour
     private void OnMouseDown()
     {
         combatMap = globalManager.CreateCombatMap();
+        globalManager.playerArtifacts.Add(FindObjectOfType<ArtifactManager>().GetArtifact("Fists"));
+        FindObjectOfType<CombatManager>().SpawnArtifacts(globalManager.playerArtifacts);
         StartCoroutine(combatMap.GetComponentInChildren<CombatManager>().AdvanceWave());
     }
 }

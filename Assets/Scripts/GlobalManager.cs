@@ -15,26 +15,6 @@ public class PlayerStats
     public float attackProgress { get; set; }
 }
 
-public class Artifact
-{
-    public string _name;
-    public string _description;
-    public string _ability;
-    public string _sprite;
-    public bool _isPlayerAttackTriggered;
-    public bool _isPlayerDamageTriggered;
-
-    public Artifact(string name, string description, string ability, string sprite, bool isPlayerAttackTriggered, bool isPlayerDamageTriggered)
-    {
-        _name = name;
-        _description = description;
-        _ability = ability;
-        _sprite = sprite;
-        _isPlayerAttackTriggered = isPlayerAttackTriggered;
-        _isPlayerDamageTriggered = isPlayerDamageTriggered;
-    }
-}
-
 public class GlobalManager : MonoBehaviour
 {
     public PlayerStats playerStats;
@@ -43,12 +23,15 @@ public class GlobalManager : MonoBehaviour
     public int currentWave;
     public GameObject dimOverlay;
     GameObject shopCanvas;
+    ArtifactManager artifactManager;
     public List<Artifact> playerArtifacts;
 
     public int gameSpeed;
 
     void Start()
     {
+        artifactManager = FindObjectOfType<ArtifactManager>();
+
         playerStats = new PlayerStats();
         playerStats.HP = 30;
         playerStats.damage = 8;
@@ -57,6 +40,8 @@ public class GlobalManager : MonoBehaviour
         playerStats.attackSpeed = 60;
         playerStats.attackVolatility = 10;
         playerStats.attackProgress = 0;
+        playerArtifacts = new List<Artifact>();
+
         currentWave = 0;
         gameSpeed = 3;
 

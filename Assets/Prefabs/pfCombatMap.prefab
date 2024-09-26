@@ -1831,6 +1831,7 @@ MonoBehaviour:
   newEnemyPos: []
   globalManager: {fileID: 0}
   combatPaused: 0
+  artifactObjects: []
 --- !u!114 &4550348010256630956
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class CombatManager : MonoBehaviour
     public Vector3[] newEnemyPos;
     public GlobalManager globalManager;
     public bool combatPaused;
+    public List<GameObject> artifactObjects;
 
     void Awake()
     {
@@ -24,12 +25,16 @@ public class CombatManager : MonoBehaviour
         globalManager = FindObjectOfType<GlobalManager>();
         playerCharInfo = FindObjectOfType<PlayerCharInfo>();
         enemyCount = 0;
+
         newEnemyPos = new Vector3[5];
         newEnemyPos[0].Set(0, 0, 0);
         newEnemyPos[1].Set(-3, 0, 0);
         newEnemyPos[2].Set(3, 0, 0);
         newEnemyPos[3].Set(-6, 0, 0);
         newEnemyPos[4].Set(6, 0, 0);
+
+        artifactObjects = new List<GameObject>();
+
         Debug.Log("Start function ran");
     }
 
@@ -38,12 +43,39 @@ public class CombatManager : MonoBehaviour
         foreach (string name in enemyNames)
         {
             if (enemyCount >= 5) { return; }
-            UnityEngine.Object pfEnemy = AssetDatabase.LoadAssetAtPath("Assets/Prefabs/Enemies/" + name + ".prefab", typeof(GameObject));
+            UnityEngine.Object pfEnemy = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Enemies/" + name + ".prefab");
             Debug.Log("Spawning " + name);
             pfEnemy = UnityEngine.Object.Instantiate(pfEnemy, GameObject.Find("EnemiesCanvas").transform);
-            pfEnemy.GameObject().transform.position = pfEnemy.GameObject().transform.position + newEnemyPos[enemyCount];
+            pfEnemy.GameObject().GetComponent<Card>().storedPos = pfEnemy.GameObject().transform.position + newEnemyPos[enemyCount];
             pfEnemy.GetComponent<Animation>().Play("SpriteSpawn");
             enemyCount++;
+        }
+    }
+
+    public void SpawnArtifacts(List<Artifact> artifacts)
+    {
+        GameObject canvas = GameObject.Find("MagicalItemsCanvas");
+
+        foreach (Artifact artifact in artifacts)
+        {
+            GameObject artifactObject = UnityEngine.Object.Instantiate(AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/Artifact.prefab"), GameObject.Find("MagicalObjectsCanvas").transform);
+            artifactObject.GetComponent<SpriteRenderer>().sprite = AssetDatabase.LoadAssetAtPath<Sprite>("Assets/Sprites/" + artifact._sprite + ".png") as Sprite;
+            artifactObject.name = artifact._name;
+
+            artifactObjects.Add(artifactObject);
+        }
+
+        UpdateArtifactPositions();
+    }
+
+    public void UpdateArtifactPositions()
+    {
+        int counter = 0;
+        int scale = 18 / artifactObjects.Count;
+
+        foreach (GameObject artifact in  artifactObjects)
+        {
+            artifact.transform.position = artifact.transform.parent.position + new Vector3 (0, scale * (counter - (artifactObjects.Count / 2)), 0);
         }
     }
 
